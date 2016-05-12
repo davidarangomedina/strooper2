@@ -3,9 +3,13 @@ package com.example.openlab.strooperapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,10 +21,17 @@ import control.TablaControlPuntaje;
 import model.Jugador;
 import model.Puntaje;
 
+
 public class StrooperActivity extends AppCompatActivity {
 
     TextView txtSegundos,txtNick,txtPuntaje, txtColor;
    //EditText nick2;
+    ImageView btnTrue, btnFalse;
+
+
+
+
+
 
     String vector_colores[]={"Azul","Verde","Rojo","Amarillo"}, colorPalabra="";
 
@@ -34,7 +45,14 @@ public class StrooperActivity extends AppCompatActivity {
         setContentView(R.layout.activity_strooper);
 
         inicializarCampos();
+        btnFalse = (ImageView) findViewById(R.id.btnFlase);
+        btnTrue = (ImageView) findViewById(R.id.btnTrue);
 
+    }
+
+    public void enableBotones(boolean sw){
+        btnTrue.setEnabled(sw);
+        btnFalse.setEnabled(sw);
     }
 
     public void BotonTrue(View view){
@@ -44,6 +62,7 @@ public class StrooperActivity extends AppCompatActivity {
         }else{
             Toast.makeText(getBaseContext(), "Incorrecto", Toast.LENGTH_SHORT).show();
         }
+        enableBotones(false);
     }
 
     public void BotonFalse(View view){
@@ -53,6 +72,7 @@ public class StrooperActivity extends AppCompatActivity {
         }else{
             Toast.makeText(getBaseContext(), "Incorrecto", Toast.LENGTH_SHORT).show();
         }
+        enableBotones(false);
     }
 
     private void inicializarCampos(){
@@ -130,6 +150,7 @@ public class StrooperActivity extends AppCompatActivity {
     CountDownTimer counter;
     int segundos =3;
     public void inicarCuentaAtras(){
+        enableBotones(true);
         intentos++;
         txtPuntaje.setText(correctos+"");
         txtPuntaje.setText(correctos+" correctos de "+intentos+" intentos");
@@ -150,15 +171,15 @@ public class StrooperActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
-                if(intentos<2){
+                //enableBotones(true);
+                if(intentos<10){
                     inicarCuentaAtras();
                     cambiarColorTexto(txtColor);
                     cambiarTexto(txtColor);
                 }
 
 
-                if(intentos==2){
+                if(intentos==10){
                     txtSegundos.setText("Juego Finalizado");
                     almacenarPuntajes();
                 }

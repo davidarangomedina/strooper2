@@ -183,7 +183,7 @@
                 android:src="@drawable/check"
                 android:layout_weight="1"
                 android:layout_marginTop="5dp"
-                android:clickable="true"
+                android:clickable="false"
                 android:onClick="BotonTrue" />
 
             <ImageView
